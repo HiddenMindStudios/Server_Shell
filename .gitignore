@@ -45,7 +45,7 @@ build/
 *.pidb
 *.log
 *.scc
-*.lib
+mysqlserver.lib
 
 # Visual C++ cache files
 ipch/
