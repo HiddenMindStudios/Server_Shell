@@ -124,10 +124,11 @@ struct SockInterface{
 					logger.send(LOGDEBUG, NETLOG, "No Client Version... ");
 				}
 			}
-			else
-				printf("CLIENT VERSION MISMATCH\n");
-				return "";
-			break;
+			else{
+				logger.send(LOGDETAIL, NETLOG, "Client bad version");
+				sMsg = base64_encode("0:BAD_CLIENT");
+				break;
+			}
 		case sockMsgLogin:
 			if (params.size() < 4){
 				logger.send(LOGDEBUG, NETLOG, "Bad parameter count. Got " + to_string(params.size()) + " expected 4");
