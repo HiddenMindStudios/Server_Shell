@@ -20,4 +20,5 @@ public:
 	InstanceManager(Log& l);
 	bool pushNewPlayer(std::string uName,int clientID);
 	bool playerDoneLoad(int clientID, int mapID);
+	InstanceManager();
 };

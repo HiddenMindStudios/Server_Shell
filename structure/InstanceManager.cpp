@@ -11,6 +11,10 @@ Player* InstanceManager::getPlayerByClientID(int id){
 	return nullptr;
 };
 
+InstanceManager::InstanceManager(){
+
+};
+
 InstanceManager::InstanceManager(Log& l){
 	logger = l;
 	loadList = vPlayer();
