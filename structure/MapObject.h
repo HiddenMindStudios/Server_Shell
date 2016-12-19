@@ -12,7 +12,7 @@ protected:
 	Vector2D* move;
 	char* name;
 	GUID_t id;
-	int bounding[1];
+	int bounding[2];
 	bool destructable;
 	bool clipping;
 	bool absolute; //Potentially useless and dangerous

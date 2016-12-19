@@ -60,7 +60,7 @@ Player* Instance::getPlayerByClientID(int cID){
 
 int Instance::addPlayerToMap(Player* p){	
 	//Max maps and playercount in map is max
-	if (mapCount == MAP_MAX && pCount[MAP_MAX] == PLAYER_MAX){
+	if (mapCount == MAP_MAX && pCount[MAP_MAX-1] == PLAYER_MAX){
 		if (logger)
 			logger->send(LOGDETAIL, GAMELOG, "Instance for mapid " + to_string(mapId) + " full. Spawning new Instance...");
 		return -1;
@@ -92,7 +92,7 @@ int Instance::addPlayerToMap(Player* p){
 
 int Instance::checkForMerge(){
 	//Create array of map ids and empty spaces
-	MapMergeData* mapMerge;
+	MapMergeData mapMerge[MAP_MAX/2];
 	int mCount = 0;
 	for (int i = 0; i < mapCount; ++i){
 		int playerCount = pCount[i];
@@ -128,11 +128,11 @@ int Instance::checkForMerge(){
 	return mCount;
 }
 
-void Instance::pushPlayerToMap(PlayerData* p, int mapID){
+void Instance::pushPlayerToMap(PlayerData& p, int mapID){
 	for (int i = 0; i < PLAYER_MAX; ++i){
 		if (!pData[mapID][i]){
 			pData[mapID][i]->mapID = mapID;
-			pData[mapID][i] = p;
+			pData[mapID][i] = &p;
 		}
 	}
 }
@@ -146,7 +146,7 @@ void Instance::mergeMaps(){
 		int pCount = merging[i].pCount;
 		for (int j = 0; j < pCount; ++j){
 			PlayerData* movePlayer = pData[mFr][j];
-			pushPlayerToMap(movePlayer, mTo);
+			pushPlayerToMap(*movePlayer, mTo);
 			pData[mFr][j] = NULL;
 		}
 		merging[i] = MergeInfo();

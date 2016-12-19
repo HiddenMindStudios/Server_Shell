@@ -32,10 +32,11 @@ void Log::initialize()
 
 string Log::formatTime(){
 	time_t t = time(0);
-	struct tm* now = localtime(&t);
+	struct tm now;
+	localtime_s(&now, &t);
 	string ret;
-	ret.append(to_string(now->tm_hour) + ":" + to_string(now->tm_min) + ":" + to_string(now->tm_sec) + "|" + to_string(now->tm_mon + 1) + "/" +
-		to_string(now->tm_mday) + "/" + to_string(now->tm_year + 1900));
+	ret.append(to_string(now.tm_hour) + ":" + to_string(now.tm_min) + ":" + to_string(now.tm_sec) + "|" + to_string(now.tm_mon + 1) + "/" +
+		to_string(now.tm_mday) + "/" + to_string(now.tm_year + 1900));
 	return ret;
 }
 

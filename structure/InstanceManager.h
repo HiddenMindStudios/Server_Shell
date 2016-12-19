@@ -4,6 +4,7 @@
 #include "Instance.h"
 #include "Game.h"
 #include <vector>
+#include "DBCon.h"
 #define MAX_INSTANCE 100
 
 typedef vector<Instance> vInstance;
@@ -15,10 +16,12 @@ class STRUCTURE_API InstanceManager{
 	vPlayer loadList;
 	int instanceCount;
 	Game gameInstance;
+	DBCon db;
 public:
 	Player* getPlayerByClientID(int id);
 	InstanceManager(Log& l);
 	bool pushNewPlayer(std::string uName,int clientID);
 	bool playerDoneLoad(int clientID, int mapID);
+	vstring getUserData(std::string uName);
 	InstanceManager();
 };

@@ -41,7 +41,7 @@ class Instance{
 	int mergeCount;
 	int mapId;
 	Log* logger;
-	void pushPlayerToMap(PlayerData* p, int mapID); //Done
+	void pushPlayerToMap(PlayerData& p, int mapID); //Done
 public:
 	void update(double dt);
 	int addPlayerToMap(Player* p); //Done

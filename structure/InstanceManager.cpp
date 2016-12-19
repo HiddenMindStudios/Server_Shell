@@ -11,6 +11,11 @@ Player* InstanceManager::getPlayerByClientID(int id){
 	return nullptr;
 };
 
+vstring InstanceManager::getUserData(std::string uName){
+	db.connect();
+	return db.getUserData(uName);
+}
+
 InstanceManager::InstanceManager(){
 
 };
@@ -20,6 +25,8 @@ InstanceManager::InstanceManager(Log& l){
 	loadList = vPlayer();
 	instance = vInstance();
 	gameInstance = Game();
+	db = DBCon();
+	db.Initialize();
 }
 
 bool InstanceManager::pushNewPlayer(std::string uName, int clientID){
@@ -29,7 +36,7 @@ bool InstanceManager::pushNewPlayer(std::string uName, int clientID){
 }
 
 bool InstanceManager::playerDoneLoad(int clientID, int mapID){
-	Player* p;
+	Player* p = nullptr;
 	for (vPlayer::iterator it = loadList.begin(); it != loadList.end(); ++it){
 		if (it->getClientID() == clientID){
 			p = &(*it); 
@@ -43,6 +50,8 @@ bool InstanceManager::playerDoneLoad(int clientID, int mapID){
 		}
 	}
 	//Fell through, no map with that mapID!
+	if (p == nullptr)
+		return false;
 	Instance i = Instance(mapID, gameInstance.getMapName(mapID), &logger);
 	i.addPlayerToMap(p);
 	instance.push_back(i);
